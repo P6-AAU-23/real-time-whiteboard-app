@@ -57,7 +57,7 @@ public class OverlayView implements SurfaceHolder.Callback {
 
     public void Show() {
         drawingOverlay.setVisibility(View.VISIBLE);
-        redraw();
+        drawRectOnCanvas();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -154,10 +154,6 @@ public class OverlayView implements SurfaceHolder.Callback {
             float ratioHeight = (float) (drawingOverlay.getHeight() + ratioHeightAdd) / srcHeight;
             cornerCircles.add(new CornerViewModel((float) p.x * ratioWidth, (float) (p.y - ySubtract) * ratioHeight, CORNER_RADIUS));
         }
-    }
-
-    private void redraw() {
-        drawRectOnCanvas();
     }
 
     private void drawRectOnCanvas() {

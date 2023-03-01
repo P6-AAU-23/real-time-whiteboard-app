@@ -4,7 +4,6 @@ package com.whiteboardapp.controller;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
-import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,7 +28,6 @@ import androidx.core.content.ContextCompat;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.whiteboardapp.R;
 import com.whiteboardapp.core.CaptureService;
-import com.whiteboardapp.core.MatPrint;
 import com.whiteboardapp.core.pipeline.CornerDetector;
 import com.whiteboardapp.core.pipeline.PerspectiveTransformer;
 
@@ -51,17 +49,18 @@ public class CaptureActivity extends AppCompatActivity {
     // View components
     private PreviewView previewView;
     private OverlayView overlayView;
+    private ImageView capturedImageView;
 
     // View bools
     private boolean isManualSelectionEnabled = false;
     private boolean isCapturingStarted = false;
     private boolean isStartOfManualSelectionHandled = false;
+    private boolean isShowingCapturedImage = false;
 
     // From domain
     private MatOfPoint2f cornerPoints;
     private CaptureService captureService;
     private Mat currentModel;
-    private ImageView capturedImageView;
 
     @Override
     @androidx.camera.core.ExperimentalGetImage
@@ -84,28 +83,22 @@ public class CaptureActivity extends AppCompatActivity {
         // Overlay to draw corner points and rectangle.
         SurfaceView drawingOverlay = findViewById(R.id.drawingOverlay);
         overlayView = new OverlayView(drawingOverlay);
-
     }
-
-    private boolean isShowingCapturedImage = false;
-
+    
     private void addBtnListeners() {
         Button cornerButton = findViewById(R.id.setCornersBtn);
         Button capturingButton = findViewById(R.id.startCapturingBtn);
         Button changeImageBtn = findViewById(R.id.changeImageBtn);
 
         changeImageBtn.setOnClickListener(view -> {
-
             if (isShowingCapturedImage) {
                 capturedImageView.setVisibility(View.INVISIBLE);
                 isShowingCapturedImage = false;
                 overlayView.Show();
-
             } else {
                 capturedImageView.setVisibility(View.VISIBLE);
                 isShowingCapturedImage = true;
                 overlayView.Hide();
-
             }
         });
 
@@ -149,10 +142,8 @@ public class CaptureActivity extends AppCompatActivity {
                 // No errors need to be handled for this Future.
                 // This should never be reached.
                 e.printStackTrace();
-
             }
         }, ContextCompat.getMainExecutor(this));
-
     }
 
     @androidx.camera.core.ExperimentalGetImage
@@ -167,12 +158,10 @@ public class CaptureActivity extends AppCompatActivity {
 
         // Create camera with objects bound to lifecycle.
         Camera camera = cameraProvider.bindToLifecycle(this, cameraSelector, previewUseCase, analysisUseCase);
-
     }
 
     // Use case for showing live camera preview.
     private Preview createPreviewUseCase() {
-
         // Configure and build preview
         Preview previewUseCase = new Preview.Builder()
                 .build();
@@ -211,11 +200,9 @@ public class CaptureActivity extends AppCompatActivity {
                 totalTime += (endTime - startTime);
                 System.out.println("Capturing analysis AVERAGE is " + ((double) totalTime / rounds) + " milliseconds");
             }
-
         });
 
         return imageAnalysisUseCase;
-
     }
 
     public static Bitmap rotateBitmap(Bitmap source, float rotationDegrees) {
@@ -298,10 +285,7 @@ public class CaptureActivity extends AppCompatActivity {
                         capturedImageView.setImageBitmap(currentModelBitmap);
                     });
                 }
-
             }
         }
-
     }
-
 }

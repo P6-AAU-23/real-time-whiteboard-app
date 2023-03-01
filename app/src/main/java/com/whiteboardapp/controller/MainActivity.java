@@ -1,12 +1,10 @@
 package com.whiteboardapp.controller;
 
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.widget.Button;
 
@@ -18,9 +16,6 @@ import androidx.core.content.ContextCompat;
 import com.whiteboardapp.R;
 
 import org.opencv.android.OpenCVLoader;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.core.Scalar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -79,14 +74,13 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == CAMERA_REQUEST_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             showCameraPreview();
         } else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            AlertDialog.Builder PermissionAlert = new AlertDialog.Builder(this);
 
-            builder.setPositiveButton("OK", (dialog, id) -> {
-            });
+            PermissionAlert.setPositiveButton("OK", (dialog, id) -> {});
 
-            builder.setTitle("Permission required");
-            builder.setMessage("Unable to access the camera. Please change camera permissions for the app in Settings.");
-            builder.create().show();
+            PermissionAlert.setTitle("Permission required");
+            PermissionAlert.setMessage("Unable to access the camera. Please change camera permissions for the app in Settings.");
+            PermissionAlert.create().show();
         }
     }
 
