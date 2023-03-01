@@ -5,7 +5,7 @@ For a given pr:
     - How it's being done, described at an appropriate level of abstraction.
     - Why it's being done.
 - Should pass all checks
-- Should be reviewed by on other group member considering:
+- Should be reviewed by one other group member considering:
     - Is the pr doing what is intended to do?
     - Is the code tested sufficiently?
         - Are core parts of the pr tested, if not why?
