@@ -1,3 +1,21 @@
+# Definition of Done
+For a given pr:
+- The pr describe:
+    - What is being done.
+    - How it's being done, described at an appropriate level of abstraction.
+    - Why it's being done.
+- Should pass all checks
+- Should be reviewed by on other group member considering:
+    - Is the pr doing what is intended to do?
+    - Is the code tested sufficiently?
+        - Are core parts of the pr tested, if not why?
+    - Is the code formatted correctly, are there any new lint errors? 
+        - See https://www.oracle.com/java/technologies/javase/codeconventions-introduction.html
+    - Is the cyclomatic complexity of each method below 11.
+    - Is there any duplicate code?
+
+![Image](https://user-images.githubusercontent.com/72453813/222139984-070a3559-ac16-44cf-a18a-95c47b68faa8.png)
+
 # Current Product Goal
 Introduce colors to the current implementation while enhancing performance to be real time (~30 fps).
 
@@ -46,8 +64,4 @@ Open the project in Android Studio and run the app in an emulator (e.g. the one 
 - Christian Damsgaard
 - Simon Holst
 - Søren Hjorth Boelskifte
-
-
-  
-
 
