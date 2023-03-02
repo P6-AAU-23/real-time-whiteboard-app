@@ -8,6 +8,7 @@ import android.util.Log;
 import com.whiteboardapp.controller.MatConverter;
 import com.whiteboardapp.core.pipeline.Binarization;
 import com.whiteboardapp.core.pipeline.ChangeDetector;
+import com.whiteboardapp.core.pipeline.ColourExtractor;
 import com.whiteboardapp.core.pipeline.Segmentator;
 
 import org.opencv.core.CvType;
@@ -54,6 +55,10 @@ public class CaptureService {
         // Change detection
         Mat imgPersistentChanges = changeDetector.detectChanges(imgBinarized, currentModelCopy);
 
+        // Compare Change-detected Binarized with original
+        Mat colouredChanges = ColourExtractor.Comparison(imgPersistentChanges, imgBgr);
+
+
         // Update current model with persistent changes.
         updateModel(imgBinarized, imgPersistentChanges);
         return currentModel;
@@ -66,16 +71,6 @@ public class CaptureService {
         currentModel.copyTo(currentModelCopy);
 
         long startTime = System.currentTimeMillis();
-
-//        for (int i = 0; i < binarizedImg.rows(); i++) {
-//            for (int j = 0; j < binarizedImg.cols(); j++) {
-//                if (imgSegMap.get(i, j)[0] == 255) {
-//                    binarizedImg.put(i, j, 255);
-//                    currentModelCopy.put(i, j, 255);
-////                    imgPerspective.put(i, j, 255, 0, 0);
-//                }
-//            }
-//        }
 
         byte[] bufferBinarized = AppUtils.getBuffer(binarizedImg);
         byte[] bufferSegmap = AppUtils.getBuffer(imgSegMap);
@@ -109,14 +104,6 @@ public class CaptureService {
                 bufferModel[i] = bufferBinarized[i];
             }
         }
-
-//        for (int i = 0; i < currentModel.rows(); i++) {
-//            for (int j = 0; j < currentModel.cols(); j++) {
-//                if (imgPersistentChanges.get(i, j)[0] == 255) {
-//                    currentModel.put(i, j, imgBinarized.get(i, j)[0]);
-//                }
-//            }
-//        }
 
         currentModel.put(0, 0, bufferModel);
 
