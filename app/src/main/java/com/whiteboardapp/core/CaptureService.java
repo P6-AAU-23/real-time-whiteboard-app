@@ -56,7 +56,7 @@ public class CaptureService {
         Mat imgPersistentChanges = changeDetector.detectChanges(imgBinarized, currentModelCopy);
 
         // Compare Change-detected Binarized with original
-        Mat colouredChanges = ColourExtractor.Comparison(imgPersistentChanges, imgBgr);
+        Mat colouredChanges = ColourExtractor.Comparison(imgPersistentChanges, matPerspectiveRgb);
 
 
         // Update current model with persistent changes.
